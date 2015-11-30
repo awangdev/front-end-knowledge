@@ -127,7 +127,7 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 
 * Explain why the following doesn't work as an IIFE: `function foo(){ }();`.
   * What needs to be changed to properly make it an IIFE?
-```
+```javascript
 //IIFE: Immediately-invoked function expression. It's nothing to do with event handling, not document onload.
 //(...contents) convert the conents into a expression.
 //'();' excute the rsult from the evaluated expression.
@@ -169,7 +169,7 @@ outterDisplay();
 ```
 
 * What's a typical use case for anonymous functions?
-```
+```javascript
 //Anonymous function is like this. It's declared using 'function()' operator, but without function declaration. Then, it's simply saved into a varaible called 'testFunc'.
 var testFunc = function(){
   //.....
@@ -194,6 +194,7 @@ function testFun(){
 };
 
 ```
+
 * How do you organize your code? (module pattern, classical inheritance?)
 ```
 I usualy work in RubyOnRails environment, where I orgnize the Angular front-end code in app/assessts.
@@ -218,8 +219,9 @@ zen-notepad/app/assets/
 
 
 ```
+
 * What's the difference between host objects and native objects?
-```
+```javascript
 //Host Object: objects that are defined by the language specification:
 //Object(constructor), Date, Math, parseInt, eval, split, string methods ... etc.
 
