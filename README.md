@@ -45,6 +45,9 @@ Forked from [h5bp](https://github.com/h5bp/Front-end-Developer-Interview-Questio
 #### HTML:
 
 * What does a `doctype` do?
+```
+
+```
 * What's the difference between standards mode and quirks mode?
 * What's the difference between HTML and XHTML?
 * Are there any problems with serving pages as `application/xhtml+xml`?
@@ -363,7 +366,7 @@ So, only use it if working for 3rd party.
 (typeof (clickAction) === "function") // if not exist, it will be undefined.
 //feature inference: Something bad: making assumptions on existance of things, and build logic around the assumption. The assumption might turn to be false in a different environment.
 //UA String: User-Agent string, like:
-Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71
+//Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71
 //However, using UA String to check browser is still a bad practice. We are making assumptions about how the UA String will be written. If it's written differently, all logics built around the UA string will fail.
 
 ```
@@ -397,7 +400,7 @@ The id will be reference in angular .config routing.
 
 * Explain "hoisting".
 ```javascript
-Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
+//Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
 rst = 11;
 console.log(rst);//outputs 11, and it's valid
 var rst;
@@ -583,13 +586,27 @@ http://www.singlepageapplicationseo.com/
 ```
 
 * What is the extent of your experience with Promises and/or their polyfills?
+```
+The Promise object is used for deferred and asynchronous computations. A Promise represents an operation that hasn't completed yet, but is expected in the future.
+ Promise.prototype.then() and Promise.prototype.catch() 
 
+
+```
 
 * What are the pros and cons of using Promises instead of callbacks?
+```
+http://blog.parse.com/learn/engineering/whats-so-great-about-javascript-promises/
 
+cons of callback: easily to get nested.
+pro of promise: .then() and makes the structure a bit easier to read. helps the error handling.
+
+```
 
 * What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?
-
+```
+like coffee script. 
+some people say: less chars to type, easier to read,  don't need to worry about some missing "{"
+```
 
 * What tools and techniques do you use debugging JavaScript code?
 ```
