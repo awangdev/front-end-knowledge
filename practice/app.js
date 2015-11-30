@@ -1,3 +1,4 @@
+"use strict"
 function onLoad(){
   document.getElementById("parent-list").addEventListener("click", function(e) {
   		console.log(e.target.nodeName);
@@ -10,12 +11,21 @@ function onLoad(){
 	});
  }
 
-	"use strict"
+function Person() {
+	this.value = 2;
+    return this.value;
+};
 
-var o = {f:function(){ return this.a + this.b; }};
-var p = Object.create(o);
-p.a = 1;
-p.b = 4;
+var person = Person;
+var shawn = new person();
 
+person.value = 4;
+shawn.value = 3;
 
-console.log(p.f());
+console.log(person);
+console.log(shawn);
+
+angular.module("testApp", [])
+.controller("MainCtrl", ['$scope', function($scope){
+	$scope.test = "TEST Angular";
+}]);

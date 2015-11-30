@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>TEST APP</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
 </head>
 
 <body onload="onLoad()">
-<title>TEST APP</title>
 
 <ul id="parent-list">
 	<li id="post-1">Item 1</li>
@@ -16,6 +17,11 @@
 	<li id="post-6">Item 6</li>
 </ul>
 
+<div ng-app="testApp">
+	<div ng-controller="MainCtrl">
+		{{test}}
+	</div>
+</div>
 
 </body>
 </html>
