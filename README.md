@@ -101,7 +101,8 @@ Well, it turns out I refer to [MDN](https://developer.mozilla.org/en-US/docs/Web
 
 * Explain event delegation
 ```
-If we have a parent elements with tons of child nodes. We don't have to bind event listener to each individual child. We only need to bind event listener to the parent, the event will be triggered whenever a child is clicked
+If we have a parent elements with tons of child nodes. We don't have to bind event listener to each individual child. 
+We only need to bind event listener to the parent, the event will be triggered whenever a child is clicked
 ```
 
 * Explain how `this` works in JavaScript
@@ -126,9 +127,39 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
   * What needs to be changed to properly make it an IIFE?
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
   * How would you go about checking for any of these states?
+```
+  null: an object can be set to value null. check: value == null?
+  undefined: the object has not appear/not declared in the scope at all. check: typeof someObject == "undefined"
+  undeclared: when a variable is initialized without using 'var'. It won't work in 'strict' mode.
+```
+
 * What is a closure, and how/why would you use one?
 * What's a typical use case for anonymous functions?
+
 * How do you organize your code? (module pattern, classical inheritance?)
+```
+I usualy work in RubyOnRails environment, where I orgnize the Angular front-end code in app/assessts.
+Because I'm using MVC framework, my front-end code is organized in VC pattern.
+I split the code by pages(view), and put Javascript code (controller)for with each view. And use angular ui-router at highest level.
+The app is built as one-page web app.
+
+
+zen-notepad/app/assets/ 
+       |----javascripts 
+                ||- home/ 
+                        ||**||- _home.html 
+                        ||**||- notePadCtrl.js 
+                ||- note/ 
+                        ||**||- _note.html 
+                        ||**||- noteCtrl.js 
+                        ||**|| noteService.js 
+                ||- app.js 
+                ||- application.js
+       |----stylesheets 
+                ||- application.css
+
+
+```
 * What's the difference between host objects and native objects?
 
 * Difference between: `function Person(){}`, `var person = Person()`, and `var person = new Person()`?
@@ -257,6 +288,11 @@ console.log(Object.getOwnPropertyDescriptor(person, "firstname"));
 * Why is extending built-in JavaScript objects not a good idea?
 * Difference between document load event and document ready event?
 * What is the difference between `==` and `===`?
+```
+=== check for object type matching as well.
+vs.
+== check for value only.
+```
 * Explain the same-origin policy with regards to JavaScript.
 * Make this work:
 ```javascript

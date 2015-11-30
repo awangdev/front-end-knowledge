@@ -11,19 +11,12 @@ function onLoad(){
 	});
  }
 
-function Person() {
-	this.value = 2;
-    return this.value;
-};
 
-var person = Person;
-var shawn = new person();
+var test = "1";
+var abc = null;
+console.log(abc);
 
-person.value = 4;
-shawn.value = 3;
 
-console.log(person);
-console.log(shawn);
 
 angular.module("testApp", [])
 .controller("MainCtrl", ['$scope', function($scope){
