@@ -127,7 +127,14 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 
 * Explain why the following doesn't work as an IIFE: `function foo(){ }();`.
   * What needs to be changed to properly make it an IIFE?
+```
+//IIFE: Immediately-invoked function expression. It's nothing to do with event handling, not document onload.
+//(...contents) convert the conents into a expression.
+//'();' excute the rsult from the evaluated expression.
+//so, this will excute automatically:
 
+(function foo(){console.log("IIFE now!")})();
+``
 
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
   * How would you go about checking for any of these states?
@@ -162,7 +169,31 @@ outterDisplay();
 ```
 
 * What's a typical use case for anonymous functions?
+```
+//Anonymous function is like this. It's declared using 'function()' operator, but without function declaration. Then, it's simply saved into a varaible called 'testFunc'.
+var testFunc = function(){
+  //.....
+}
+//The reason that we can assign anonymous function: function is just a special type of javascript object, it can be passed around.
+function test(x){
+  if (x == 1) {
+    return function(){return "ONE";};
+  } else {
+    return function(){return "ELSE"};
+  }
+}
+console.log(test(1)());
 
+//SO, usage: it's used as a expression. It's created in runtime, and can be pased into other functions as variable easily. 
+
+
+
+//Otherwise, here is a named function, in a regular way
+function testFun(){
+  //...
+};
+
+```
 * How do you organize your code? (module pattern, classical inheritance?)
 ```
 I usualy work in RubyOnRails environment, where I orgnize the Angular front-end code in app/assessts.
@@ -188,6 +219,17 @@ zen-notepad/app/assets/
 
 ```
 * What's the difference between host objects and native objects?
+```
+//Host Object: objects that are defined by the language specification:
+//Object(constructor), Date, Math, parseInt, eval, split, string methods ... etc.
+
+//Host Ojbect: methods suported in host envrionment. Any non-native object is host object.
+//In browser envrionment working with html: window, document, location, history, getElementById, XMLHttpRequest, setTimeout....etc
+
+
+//Note: for work project, now it's clear that I've been working with native objects for over a year!
+
+```
 
 * Difference between: `function Person(){}`, `var person = Person()`, and `var person = new Person()`?
 ```javascript
@@ -362,7 +404,27 @@ Working as callback function, .then() catches server response and trigger corres
 
 * What is event loop?
   * What is the difference between call stack and task queue?
+```
+/*
+event loop:The browser has inner loop, called Event Loop, which checks the event queue and processes events, executes functions etc.
 
+Quite clear explanation:
+http://www.altitudelabs.com/blog/what-is-the-javascript-event-loop/
+
+- Javascript: single threaded
+- To excute every single line of javascript, Javascript engine uses call stack.
+- Call stack has blocking issue. So JavaScript engine uses asynchronous call back.
+- Now, we have 3 parties: call stack, event table, event queue.
+1. call stack: stores the regular function calls.
+2. When it's a callback function, register it in the Event Table.
+3. Event Table has a condition that will trigger to move the call back funtion. When it triggers (for example, a wait of 5 seconds), it'll move that callback function into Event Queue. Ready to go!
+4. Now, Event Loop comes to play. It checks the callstack. Only if callstack is empty(), it will poll() off the head of the Event Queue, and add it to callstack.
+5. Ofcourse the callstack will excute whatever that's next.
+
+So, in conclusion, Event Loop runs indefinitely and checks if call stack if empty(). If so, poll() items from queue and add into call stack.
+*/
+
+```
 
 
 
@@ -392,7 +454,14 @@ Working as callback function, .then() catches server response and trigger corres
   * ETag
   * X-Frame-Options
 * What are HTTP actions? List all HTTP actions that you know, and explain them.
-
+```
+/*
+GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,CONNECT,PATCH
+GET:request a representation of the specified resource. Only retrieve data. No other effects.
+HEAD:same as GET request for same info, but only get header, without response body. Useful to retrieve meta-data
+POST:request the server to accept the entity enclosed inthe request. Usually it populates the database, write some conents to the server storage.
+*/
+```
 #### Coding:
 
 *Question: What is the value of `foo`?*
