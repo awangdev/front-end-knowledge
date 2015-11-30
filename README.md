@@ -539,6 +539,12 @@ setTimeout(function() {
   console.log('two');
 }, 0);
 console.log('three');
+
+//one, three, two
+//Regardless of what milliseconds we set to setTimeout() funtion, that function call
+//is always registered at end of the browser processes. It means it takes # of milliseconds 
+//to excute after all other regular tasks are done.
+
 ```
 
 #### Fun:
