@@ -119,11 +119,50 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 ```
 
 * Explain how prototypal inheritance works
+```javascript
+//you can do Object.create(some existing object), or use a constructor with 'new' keyword. In ES6, can even use class.
+//They inherite the values, functions in a new instance. Changes on the new instance won't affect original objects.
 
+//With Object.create(...)
+"use strict"
+var o = {
+  a : 2,
+  square: function(){
+    return this.a * this.a;
+  }
+};
+var newObj1 = Object.create(o);
+newObj1.a = 3;
+console.log(newObj1.square());//output: 9
+
+
+//New object example:
+function obj(){
+  this.a = 1;
+  this.b = 2;
+  this.product = function(){
+    return this.a * this.b;
+  }
+}
+var newObj2 = new obj();
+newObj2.a = 3;
+newObj2.b = 3;
+console.log(newObj2.product());//output: 9
+
+```
 
 
 * What do you think of AMD vs CommonJS?
+```
+Never used AMD and CommonJS. Research a bit:
+They are working with JavaScript module, dependecies...
 
+AMD: Asynchronous Module Definition format. It's more suited for the browser, because it supports asynchronous loading of module dependencies.
+CommonJS: targeting server-side environments.
+
+I haven't got a chance to use it at all, and I handle all my dependencies pretty much in Rails Assests pipeline with bower, gem .. etc.
+
+```
 
 * Explain why the following doesn't work as an IIFE: `function foo(){ }();`.
   * What needs to be changed to properly make it an IIFE?
@@ -308,12 +347,44 @@ console.log(bindGetX());  //81
 ```
 
 * When would you use `document.write()`?
+```
+We don't use it normally by ourself. Changing the web page after loaded, is not a good practice.
+
+However, some third party might use it. For example, an extension on google chrome, ads, google analytics... etc.
+
+So, only use it if working for 3rd party.
+```
 
 * What's the difference between feature detection, feature inference, and using the UA string?
+```javascript
+//Well, this features is about cross-browser compatibiilty...
+
+//feature detection: check if certain feature exists. For example, check if a function exists: 
+(typeof (clickAction) === "function") // if not exist, it will be undefined.
+//feature inference: Something bad: making assumptions on existance of things, and build logic around the assumption. The assumption might turn to be false in a different environment.
+//UA String: User-Agent string, like:
+Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71
+//However, using UA String to check browser is still a bad practice. We are making assumptions about how the UA String will be written. If it's written differently, all logics built around the UA string will fail.
+
+```
 
 * Explain AJAX in as much detail as possible.
+```
+AJAX: Asynchronous JavaScript and XML
+As I learn javascript, I've been working for over a year with native Javascript, but not with host JavaScript environment like in browser. So honestly, not close to AJAX, expecially when I learn Angular, most stuff are handled ...
+
+As a brief understanding, it utilizes a set of web technologies used on client-side to create asynchronous web app. 
+
+Allow web page to exchange date to server, without the need to reload the entire page .
+
+And with jQuery, they are pretty much handled and built in AngularJS.
+
+```
 
 * Explain how JSONP works (and how it's not really AJAX).
+```
+JSONP: JSON with Padding, is a technique used by web developers to overcome the cross-domain restrictions imposed by browsers to allow data to be retrieved from systems other than the one the page was served by.
+```
 
 * Have you ever used JavaScript templating?
   * If so, what libraries have you used?
@@ -325,7 +396,10 @@ The id will be reference in angular .config routing.
 ```
 
 * Explain "hoisting".
+```
 
+
+```
 
 * Describe event bubbling.
 ```
