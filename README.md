@@ -163,11 +163,11 @@ zen-notepad/app/assets/
 * What's the difference between host objects and native objects?
 
 * Difference between: `function Person(){}`, `var person = Person()`, and `var person = new Person()`?
-```
-`function Person(){}`: is a Person() constructor;
-`var person = Person()`: called Person() as a function. It's undefined, just because Person() does not return anything.
-`var person = Person`:copy Person into person. We can use person() as constructor now. However, anything changes on person, does not affect original Person()
-`var shawn = new Person()`: create a new instance of that constructor, shawn. If changing the shawn here, it will change the new constructor.
+```javascript
+//`function Person(){}`: is a Person() constructor;
+//`var person = Person()`: called Person() as a function. It's undefined, just because Person() does not return anything.
+//`var person = Person`:copy Person into person. We can use person() as constructor now. However, anything changes on person, does not affect original Person()
+//`var shawn = new Person()`: create a new instance of that constructor, shawn. If changing the shawn here, it will change the new constructor.
 
 function Person() {
   this.value = 2;
@@ -187,7 +187,7 @@ console.log(shawn);//3
 ```
 
 * What's the difference between `.call` and `.apply`?
-```
+```javascript
 //`.call` gets multiple arguments, separate by comma.
 //`.apply' takes an array as 2nd input argument
 
@@ -220,7 +220,7 @@ var max = Math.max.apply(null, numbers); // This about equal to Math.max(numbers
 ```
 
 * Explain `Function.prototype.bind`.
-```
+```javascript
 var x = 9;
 var module = {
   x: 81,
@@ -267,7 +267,7 @@ Different from event bubbling. The event is first captured by outermost elements
 ```
 
 * What's the difference between an "attribute" and a "property"?
-```
+```javascript
 //Note: we are looking at JavaScript property here.
 //It's bascially the different property items separated by ',' in the javascript object.
 var person = {
@@ -433,7 +433,7 @@ console.log('three');
 #### Angular:
 
 * basic setup in app.js
-```
+```html
 //html:
 <head>
 <title>TEST APP</title>
@@ -445,8 +445,8 @@ console.log('three');
     {{test}}
   </div>
 </div>
-
-
+```
+```javascript
 //app.js
 
 angular.module("testApp", [])
