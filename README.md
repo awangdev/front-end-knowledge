@@ -123,8 +123,12 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 
 
 * What do you think of AMD vs CommonJS?
+
+
 * Explain why the following doesn't work as an IIFE: `function foo(){ }();`.
   * What needs to be changed to properly make it an IIFE?
+
+
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
   * How would you go about checking for any of these states?
 ```
@@ -134,6 +138,29 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 ```
 
 * What is a closure, and how/why would you use one?
+```javascript
+//A closure is a special kind of object that combines two things: a function, and the environment in which that function was created. 
+function func(){
+  var name = "shawn";
+  function display(){
+    console.log(name);
+  }
+  display();
+  return display;
+};
+
+var outterDisplay = func();// returns the entire func() as a closure, in which scope it includes both the 'name' string and 'display() function'
+
+outterDisplay();
+
+/*
+  //outputs:
+  shawn         // by calling func()
+  shawn         // by calling outterDisplay
+*/
+
+```
+
 * What's a typical use case for anonymous functions?
 
 * How do you organize your code? (module pattern, classical inheritance?)
@@ -371,22 +398,67 @@ Working as callback function, .then() catches server response and trigger corres
 *Question: What is the value of `foo`?*
 ```javascript
 var foo = 10 + '20';
+//'1020' as a string
 ```
 
 *Question: How would you make this work?*
 ```javascript
 add(2, 5); // 7
 add(2)(5); // 7
+/*
+  Implement:
+  If the function has 2 inputs, simply return x + y.
+  Otherwise, return another funtion with a 2nd variable y. Then return x+y.
+    This works because add(x,y) creates the closure with 'x' ready to use. Then calling the inner funtion with (y), both x, y will be ready.
+*/
+function add(x, y){
+  if (typeof y != "undefined") {
+    return x + y;
+  } else {
+    return function(y) {
+      return x + y;
+    };
+  }
+};
+
+console.log("add(10,20): " + add(10,20));
+console.log("add(10)(20): " + add(10)(20));
+
 ```
 
 *Question: What value is returned from the following statement?*
 ```javascript
 "i'm a lasagna hog".split("").reverse().join("");
+
+//goh angasal a m'i
+/*
+  'split("")' separate the string by "", which gives separate chars. Works like Java: str.toCharArray();
+  Note: split(" ") will splity by empty space.
+  reverse() reverses the array
+  join("") merge the array, with "" empty string in between each item in the array.
+  Note: join("|") will put a divider in between each array item while merging.
+*/
+
+
 ```
 
 *Question: What is the value of `window.foo`?*
 ```javascript
 ( window.foo || ( window.foo = "bar" ) );
+
+//"bar"
+/*
+  1. That || first try to pick window.foo, however it's undefined, so it keeps on looking for the next attribute: ( window.foo = "bar" )
+  2. ( window.foo = "bar" ) assigns that string 'bar' to window.foo, so window.foo is no longer undefined.
+  3. then (window.foo) is assigned to variable/print out.
+
+  Note: first attribute before || and the 2nd attribute after does not have logic relationship. We can exchange the 2nd attribute to (window.a = "test") and it will work the same
+
+*/
+//test
+var rst = ( window.foo || ( window.foo = "bar" ) );
+console.log(rst);//bar
+
 ```
 
 *Question: What is the outcome of the two alerts below?*
@@ -397,6 +469,15 @@ var foo = "Hello";
   alert(foo + bar);
 })();
 alert(foo + bar);
+
+//alert: Hello World
+//Uncought ReferenceError: bar is not defined
+/*
+  First, (function(){...})(); excutes whatever that in the '();'
+    foot is in outter scope, it works inside of '();'
+  Second, outside of '();', bar is not defined. So it throws the error.
+*/
+
 ```
 
 *Question: What is the value of `foo.length`?*
@@ -404,6 +485,8 @@ alert(foo + bar);
 var foo = [];
 foo.push(1);
 foo.push(2);
+
+//2;
 ```
 
 *Question: What is the value of `foo.x`?*
@@ -411,6 +494,42 @@ foo.push(2);
 var foo = {n: 1};
 var bar = foo;
 foo.x = foo = {n: 2};
+
+//foo.x : undefined
+
+
+//line1:
+foo = {n:1}
+
+//line2:
+//bar becomes a copy of foo. 
+
+//line3:
+//foo.x is a reference, it's same a bar.x. For a quick side example:
+var foo = {n: 1};
+var bar = foo;
+
+foo.x = 2;
+console.log(bar); //{n:1, x:2}
+
+//What actaully happens:
+//on the right side, foo = {n:2} is excuted first.
+//foo.x is a reference, it's same as bar.x. Then this reference point is assigned with foo, which is just {n:2}. Then
+foo = {n:2}
+bar = {
+  n : 2,
+  x : {n : 2}
+}
+//So, ofcourse if we try to access foo.x, it will be undefined.
+
+//The given code works the same as below:
+var foo = {n: 1};
+var bar = foo;
+
+foo = {n: 2};
+bar.x = foo;
+
+
 ```
 
 *Question: What does the following code print?*
