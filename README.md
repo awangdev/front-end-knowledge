@@ -396,9 +396,11 @@ The id will be reference in angular .config routing.
 ```
 
 * Explain "hoisting".
-```
-
-
+```javascript
+Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
+rst = 11;
+console.log(rst);//outputs 11, and it's valid
+var rst;
 ```
 
 * Describe event bubbling.
@@ -556,19 +558,78 @@ With that said, since it's already broken, it's just safer to not touch it. Beca
 
 * Why would you use something like the `load` event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
 ```
+Sometimes we want to excute some funtion when window.load is ready.
+Disadvantange: it can be slow if there is lots contents on the page.
 
+Alternative: use document.ready(), which loads before images,css,javascript are loaded..
+Or, exute javascript function as expression whenever that script is running. (function(){...})();
 ```
 
 * Explain what a single page app is and how to make one SEO-friendly.
+```
+Single page app is utilizing routing techniques : have one big container and many differnet sub views. 
+
+Like in angular, we use ui-view and ui-router to switch inner-views.
+
+1. Single page may have lots of 'server-can-understand' URLS that's not SEO-friend:
+http://example.com/app#this_is_not_a_real_url_for_this_purpose
+
+It's better to make it a real URL like:
+http://example.com/app/this_is_a_real_url_for_this_purpose
+2. You need to have the server generate the pages prefilled with the JSON on explicit request
+this is most easily acomplished using PhantomJS or similar.
+http://www.singlepageapplicationseo.com/
+
+```
+
 * What is the extent of your experience with Promises and/or their polyfills?
+
+
 * What are the pros and cons of using Promises instead of callbacks?
+
+
 * What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?
+
+
 * What tools and techniques do you use debugging JavaScript code?
+```
+At this moment, I don't have much experience with unit test tools, but I frequently using console.log() to debug.
+In my native JavaScript project, I build debug print() methods, similar to console.log() to debug.
+```
 * What language constructions do you use for iterating over object properties and array items?
+```javascript
+//If it's just a regular array
+var arr = [9,2,3,4,5];
+
+for (var i = 0; i < arr.length; i++) {
+  console.log(arr[i])
+}
+
+//If that's a javascript object, or still just a regular array, it's easy to use key:value structure:
+arr = {
+  a: "aa",
+  b: "bb",
+  c: "cc"
+}
+for (var key in arr) {
+  console.log(arr[key]);
+}
+
+```
+
 * Explain the difference between mutable and immutable objects.
   * What is an example of an immutable object in JavaScript?
   * What are the pros and cons of immutability?
   * How can you achieve immutability in your own code?
+```
+immutable: Javascript string, number. it always create a new instance then saved to a variable. Any operaetor on string won't change that string itself.
+mutable: array.
+Pro: prevent accidental changes to object.
+Cons: bad performance. It alaways createa new instance.
+
+achieve immutability in my code:
+Use 3rd party library like : immutable.js
+```
 
 * Explain the difference between synchronous and asynchronous functions.
 ```
@@ -578,9 +639,8 @@ asynchronous: can move on the other tasks. When the original action finishes, it
 
 We run multiple http request to different sources on a web page, and we won't ever wait for one http response before starting another. So it has to be asynchronous.
 
-
-
 ```
+
 * http example? Expand a bit on experience with it?
 ```
 //Most experience with Angular $http.
