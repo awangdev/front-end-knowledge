@@ -134,7 +134,7 @@ If somehow, a method() is assigned to a global object, then 'this' of course ref
 //so, this will excute automatically:
 
 (function foo(){console.log("IIFE now!")})();
-``
+```
 
 * What's the difference between a variable that is: `null`, `undefined` or undeclared?
   * How would you go about checking for any of these states?
