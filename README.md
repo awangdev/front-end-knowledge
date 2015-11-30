@@ -308,8 +308,11 @@ console.log(bindGetX());  //81
 ```
 
 * When would you use `document.write()`?
+
 * What's the difference between feature detection, feature inference, and using the UA string?
+
 * Explain AJAX in as much detail as possible.
+
 * Explain how JSONP works (and how it's not really AJAX).
 
 * Have you ever used JavaScript templating?
@@ -357,7 +360,19 @@ console.log(Object.getOwnPropertyDescriptor(person, "firstname"));
 ```
 
 * Why is extending built-in JavaScript objects not a good idea?
+```
+Native JavaScript objects are implemented according to standard like ES5, ES6. If we choose to change the behavior, there is a chance that we break the rules specified.
+Also, if the later on we need to adapt to later version of ECMAScript, we have to check all the extended objects again.
+
+When need some extended feature, just build a standalone object.
+```
+
 * Difference between document load event and document ready event?
+```
+//$(document).ready() fires when the HTML finishes loading. It does not care about images, scripts, css ... etc
+//window.onload: a bit slower. It waits for all contents(images, css, scripts ... etc), then fires.
+```
+
 * What is the difference between `==` and `===`?
 ```
 === check for object type matching as well.
@@ -365,15 +380,111 @@ vs.
 == check for value only.
 ```
 * Explain the same-origin policy with regards to JavaScript.
+```
+The same-origin policy restricts how a document or script loaded from one origin can interact with a resource from another origin. It is a critical security mechanism for isolating potentially malicious documents.
+
+For example, it fails and triggers cross-origin error, if:
+- you try to use different protocol: http vs. https
+- you try to use different port
+- you try to access different host
+
+It usually happens when I build a simple AngularJS app, and try to build routers onto it.
+
+A not-so-easy way to walk around, is basically to have a backend server. For example, a EasyPHP software would do the trick, it launches a apache server.
+
+```
+
 * Make this work:
 ```javascript
 duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
+
+function duplicate(arr){
+  var size = arr.length;
+  for (var i = 0; i < size; i++) {
+    arr.push(arr[i])
+  }
+  return arr;
+}
+
+console.log(duplicate([1,2,3,4,5]));
 ```
+
 * Why is it called a Ternary expression, what does the word "Ternary" indicate?
+```
+The conditional (ternary) operator is the only JavaScript operator that takes 3 operands. This operator is frequently used as a shortcut for the if statement.
+
+condition ? expr1 : expr2 
+
+```
+
 * What is `"use strict";`? what are the advantages and disadvantages to using it?
+```javascript
+//'use strict' indicates the code should be executed in 'stric mode'. Well, to have a Java mom style. It converts mistakes into errors
+
+//Disadvantages:
+//More constraints. for example, can access 'this' in global scope. 
+//Cause confusion if some people from the team are originally in normal mode, but cannot adapt to strict mode, especailly when some features are built in strict mode, so it won't work as expected for guys in normal mode.
+
+//My opinion: I'd use strict mode, because it checks for potential mistakes like if I accidentally initialize a variable without definition. It causes issues. So I prefer to have error checkers. This way, JavaScript won't be able to kill you that easily.
+
+//Examples:
+"use strict";
+//JavaScript would fail if:
+//try to access 'this' in global scope, where 'this' is defined in a function
+
+//initialize a variable without define it:
+x = 3.14
+//try to delete a variable
+delete x;
+//duplicating parameter name:
+function x(p1, p1) {};  
+//using Octal numeric literals
+var x = 010;
+//reserved keywords:
+//eval, arguments
+
+// Assignment to a non-writable property
+var obj1 = {};
+Object.defineProperty(obj1, "x", { value: 42, writable: false });
+obj1.x = 9; // throws a TypeError
+
+// Assignment to a getter-only property
+var obj2 = { get x() { return 17; } };
+obj2.x = 5; // throws a TypeError
+
+// Assignment to a new property on a non-extensible object
+var fixed = {};
+Object.preventExtensions(fixed);
+fixed.newProp = "ohai"; // throws a TypeError
+//..
+```
+
 * Create a for loop that iterates up to `100` while outputting **"fizz"** at multiples of `3`, **"buzz"** at multiples of `5` and **"fizzbuzz"** at multiples of `3` and `5`
+```javascript
+for (var i = 0; i <= 100; i++) {
+  if (i % 3 == 0 && i % 5 == 0) {
+    console.log(i + " fizzbuzz");
+  } else if (i % 3 == 0) {
+    console.log(i + " fizz");
+  } else if (i % 5 == 0) {
+    console.log(i + " buzz");
+  }
+}
+
+```
+
+
 * Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+```
+global scope variable are generally bad in Javascript. Because you don't know where it appears, and where it's initialized, and where-else it's being used.
+With that said, since it's already broken, it's just safer to not touch it. Because once you change something on it, pieces of the project will break underneath.
+```
+
 * Why would you use something like the `load` event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
+```
+
+```
+
 * Explain what a single page app is and how to make one SEO-friendly.
 * What is the extent of your experience with Promises and/or their polyfills?
 * What are the pros and cons of using Promises instead of callbacks?
