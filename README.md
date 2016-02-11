@@ -114,7 +114,8 @@ We only need to bind event listener to the parent, the event will be triggered w
 
 * What is a closure, and how/why would you use one?
 ```javascript
-//Closures are functions that refer to independent (free) variables. In other words, the function defined in the closure 'remembers' the environment in which it was created.
+//Closures are functions that refer to independent (free) variables. 
+//In other words, the function defined in the closure 'remembers' the environment in which it was created.
 
 function func(){
   var name = "shawn";
@@ -138,7 +139,7 @@ outterDisplay();
 ```
 
 * Explain how `this` works in JavaScript
-```
+```javascript
 //In global: The global this, it's the `window` object.
 //In method: If `this` is in a method of a object, it refers to the object where the method is called.
 //In constructor: It's the same when it's used in a constructor. It refers to that `new` object created.
@@ -147,7 +148,8 @@ outterDisplay();
 //It uses that 'o' object as `this` for method add, and uses arg1, arg2 as input arguments.
 
 //Be Careful!
-//If somehow, a method() is assigned to a global object, then 'this' of course refers to the window object. Then, call this method() in global scope will return global corresponding global variables via 'this'
+//If somehow, a method() is assigned to a global object, then 'this' of course refers to the window object. 
+//Then, call this method() in global scope will return global corresponding global variables via 'this'
 
 //For example
 var o = {prop: 37};
@@ -163,40 +165,39 @@ console.log(independent())// logs undefined. Called on global environment
 
 ```
 
-* What's the difference between `.call` and `.apply`?
+* What are, and what's the difference between `.call` and `.apply`?
 ```javascript
-//Where a function uses the this keyword in its body, its value can be bound to a particular object in the call using the call or apply methods that all functions inherit from Function.prototype.
+//Where a function uses the 'this' keyword in its body, its value can be bound from a particular object in the function call 
+//using the 'call' or 'apply' methods that all functions inherit from Function.prototype.
 
+//That is: a function already has its existing argumenets; 'call' or 'apply' inject a object in 1st argument spot,
+//and contents of that object can be called with 'this' 
+
+//For example, this.a and this.b are missing in this function:
 function add(c, d){
   return this.a + this.b + c + d;
 }
 
 var o = {a:1, b:3};
 
-// The first parameter is the object to use as
-// 'this', subsequent parameters are passed as 
-// arguments in the function call
+// The first parameter is the object to use as 'this', 
+//subsequent parameters are passed as arguments in the function call
 add.call(o, 5, 7); // 1 + 3 + 5 + 7 = 16
 
-// The first parameter is the object to use as
-// 'this', the second is an array whose
-// members are used as the arguments in the function call
+// The first parameter is the object to use as 'this', 
+//the second is an array whose members are used as the arguments in the function call
 add.apply(o, [10, 20]); // 1 + 3 + 10 + 20 = 34
 
 
 //`.call` gets multiple arguments, separate by comma.
 //`.apply' takes an array as 2nd input argument
 
+//The above are how we bind external objects into function calls using 'call' and 'apply'
+
 //'call' can be used to chain constructure
 function Product(name, price) {
   this.name = name;
   this.price = price;
-
-  if (price < 0) {
-    throw RangeError('Cannot create product ' +
-                      this.name + ' with a negative price');
-  }
-
   return this;
 }
 
@@ -204,6 +205,15 @@ function Food(name, price) {
   Product.call(this, name, price);
   this.category = 'food';
 }
+
+var product = new Product("TestProduct", 111);
+var food = new Food("TestFood", 999);
+
+console.log(product);
+console.log(food);
+
+//Product { name: 'TestProduct', price: 111 } 
+//Food { name: 'TestFood', price: 999, category: 'food' } 
 
 //Apply can be used to chain constructor as well. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
 //Also, a simple use case might be, again, to put a array of arguments into a function call:
@@ -218,7 +228,8 @@ var max = Math.max.apply(null, numbers); // This about equal to Math.max(numbers
 
 * Explain `Function.prototype.bind`.
 ```javascript
-//Calling f.bind(someObject) creates a new function with the same body and scope as f, but where this occurs in the original function, in the new function it is permanently bound to the first argument of bind, regardless of how the function is being used.
+//Calling f.bind(someObject) creates a new function with the same body and scope as f, but where this occurs in the original function, 
+//in the new function it is permanently bound to the first argument of bind, regardless of how the function is being used.
 
 function f(){
   return this.a;
