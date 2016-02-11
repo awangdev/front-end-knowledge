@@ -46,6 +46,9 @@ Forked from [h5bp](https://github.com/h5bp/Front-end-Developer-Interview-Questio
 
 * What does a `doctype` do?
 ```
+HTML: HyperText Markup Language
+
+The doctype declaration should be the very first thing in an HTML document, before the tag. The doctype declaration is not an HTML tag; it is an instruction to the web browser about what version of the markup language the page is written in.
 
 ```
 * What's the difference between standards mode and quirks mode?
@@ -108,18 +111,128 @@ If we have a parent elements with tons of child nodes. We don't have to bind eve
 We only need to bind event listener to the parent, the event will be triggered whenever a child is clicked
 ```
 
+
+* What is a closure, and how/why would you use one?
+```javascript
+//Closures are functions that refer to independent (free) variables. In other words, the function defined in the closure 'remembers' the environment in which it was created.
+
+function func(){
+  var name = "shawn";
+  function display(){
+    console.log(name);
+  }
+  display();
+  return display;
+};
+
+var outterDisplay = func();// returns the entire func() as a closure, in which scope it includes both the 'name' string and 'display() function'
+
+outterDisplay();
+
+/*
+  //outputs:
+  shawn         // by calling func()
+  shawn         // by calling outterDisplay
+*/
+
+```
+
 * Explain how `this` works in JavaScript
 ```
-The global this, it's the `window` object.
-If `this` is in a method of a object, it refers to the object where the method is called.
-It's the same when it's used in a constructor. It refers to that `new` object created.
+//In global: The global this, it's the `window` object.
+//In method: If `this` is in a method of a object, it refers to the object where the method is called.
+//In constructor: It's the same when it's used in a constructor. It refers to that `new` object created.
 
-Note: function.call(o, arg1, arg2, ... etc)
-It uses that 'o' object as `this` for method add, and uses arg1, arg2 as input arguments.
+//Note: function.call(o, arg1, arg2, ... etc)
+//It uses that 'o' object as `this` for method add, and uses arg1, arg2 as input arguments.
 
-Be Careful!
-If somehow, a method() is assigned to a global object, then 'this' of course refers to the window object. Then, call this method() in global scope will return global corresponding global variables via 'this'
+//Be Careful!
+//If somehow, a method() is assigned to a global object, then 'this' of course refers to the window object. Then, call this method() in global scope will return global corresponding global variables via 'this'
+
+//For example
+var o = {prop: 37};
+
+function independent() {
+  return this.prop;
+}
+
+o.f = independent;
+
+console.log(o.f()); // logs 37. Called on object.method()
+console.log(independent())// logs undefined. Called on global environment
+
 ```
+
+* What's the difference between `.call` and `.apply`?
+```javascript
+//Where a function uses the this keyword in its body, its value can be bound to a particular object in the call using the call or apply methods that all functions inherit from Function.prototype.
+
+function add(c, d){
+  return this.a + this.b + c + d;
+}
+
+var o = {a:1, b:3};
+
+// The first parameter is the object to use as
+// 'this', subsequent parameters are passed as 
+// arguments in the function call
+add.call(o, 5, 7); // 1 + 3 + 5 + 7 = 16
+
+// The first parameter is the object to use as
+// 'this', the second is an array whose
+// members are used as the arguments in the function call
+add.apply(o, [10, 20]); // 1 + 3 + 10 + 20 = 34
+
+
+//`.call` gets multiple arguments, separate by comma.
+//`.apply' takes an array as 2nd input argument
+
+//'call' can be used to chain constructure
+function Product(name, price) {
+  this.name = name;
+  this.price = price;
+
+  if (price < 0) {
+    throw RangeError('Cannot create product ' +
+                      this.name + ' with a negative price');
+  }
+
+  return this;
+}
+
+function Food(name, price) {
+  Product.call(this, name, price);
+  this.category = 'food';
+}
+
+//Apply can be used to chain constructor as well. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+//Also, a simple use case might be, again, to put a array of arguments into a function call:
+/* min/max number in an array */
+var numbers = [5, 6, 2, 3, 7];
+
+/* using Math.min/Math.max apply */
+var max = Math.max.apply(null, numbers); // This about equal to Math.max(numbers[0], ...)
+
+```
+
+
+* Explain `Function.prototype.bind`.
+```javascript
+//Calling f.bind(someObject) creates a new function with the same body and scope as f, but where this occurs in the original function, in the new function it is permanently bound to the first argument of bind, regardless of how the function is being used.
+
+function f(){
+  return this.a;
+}
+
+var g = f.bind({a:"azerty"});
+console.log(g()); // azerty
+
+var o = {a:37, f:f, g:g};
+console.log(o.f(), o.g()); // 37, azerty
+
+
+```
+
 
 * Explain how prototypal inheritance works
 ```javascript
@@ -186,29 +299,6 @@ I haven't got a chance to use it at all, and I handle all my dependencies pretty
   undeclared: when a variable is initialized without using 'var'. It won't work in 'strict' mode.
 ```
 
-* What is a closure, and how/why would you use one?
-```javascript
-//A closure is a special kind of object that combines two things: a function, and the environment in which that function was created. 
-function func(){
-  var name = "shawn";
-  function display(){
-    console.log(name);
-  }
-  display();
-  return display;
-};
-
-var outterDisplay = func();// returns the entire func() as a closure, in which scope it includes both the 'name' string and 'display() function'
-
-outterDisplay();
-
-/*
-  //outputs:
-  shawn         // by calling func()
-  shawn         // by calling outterDisplay
-*/
-
-```
 
 * What's a typical use case for anonymous functions?
 ```javascript
@@ -299,55 +389,7 @@ console.log(shawn);//3
 
 ```
 
-* What's the difference between `.call` and `.apply`?
-```javascript
-//`.call` gets multiple arguments, separate by comma.
-//`.apply' takes an array as 2nd input argument
 
-//'call' can be used to chain constructure
-function Product(name, price) {
-  this.name = name;
-  this.price = price;
-
-  if (price < 0) {
-    throw RangeError('Cannot create product ' +
-                      this.name + ' with a negative price');
-  }
-
-  return this;
-}
-
-function Food(name, price) {
-  Product.call(this, name, price);
-  this.category = 'food';
-}
-
-//Apply can be used to chain constructor as well. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
-//Also, a simple use case might be, again, to put a array of arguments into a function call:
-/* min/max number in an array */
-var numbers = [5, 6, 2, 3, 7];
-
-/* using Math.min/Math.max apply */
-var max = Math.max.apply(null, numbers); // This about equal to Math.max(numbers[0], ...)
-
-```
-
-* Explain `Function.prototype.bind`.
-```javascript
-var x = 9;
-var module = {
-  x: 81,
-  getX: function() { return this.x; }
-};
-
-var noBindGetX = module.getX;
-console.log(noBindGetX());  //9
-
-//Bind back to that particular module
-var bindGetX = noBindGetX.bind(module);
-console.log(bindGetX());  //81
-
-```
 
 * When would you use `document.write()`?
 ```
