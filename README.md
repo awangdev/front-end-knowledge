@@ -552,6 +552,12 @@ condition ? expr1 : expr2
 * What is `"use strict";`? what are the advantages and disadvantages to using it?
 ```javascript
 //'use strict' indicates the code should be executed in 'stric mode'. Well, to have a Java mom style. It converts mistakes into errors
+//Makes debugging easier
+//Prevents accidental globals.
+//Eliminates this coercion. 
+//Disallows duplicate property names or parameter values
+//Makes eval() safer.
+
 
 //Disadvantages:
 //More constraints. for example, can access 'this' in global scope. 
